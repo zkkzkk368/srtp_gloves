@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>510</width>
+    <height>478</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>手势控制系统</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGroupBox" name="gbRuleStatement">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>241</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>规则说明</string>
+    </property>
+    <widget class="QLabel" name="lRuleStatement">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>211</width>
+       <height>281</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;变量：&lt;/p&gt;&lt;p&gt;ax：加速度x轴 gx：陀螺仪x轴&lt;/p&gt;&lt;p&gt;ay：加速度y轴 gy：陀螺仪y轴&lt;/p&gt;&lt;p&gt;az：加速度z轴 gz：陀螺仪z轴 &lt;/p&gt;&lt;p&gt;-----以上均为数值--- &lt;/p&gt;&lt;p&gt;t1 - t5：金属片触碰状态（布尔值）&lt;/p&gt;&lt;p&gt;比较运算符：&lt;/p&gt;&lt;p&gt;&amp;gt;、&amp;lt;、&amp;gt;=、&amp;lt;=、=&lt;/p&gt;&lt;p&gt;逻辑运算符：&lt;/p&gt;&lt;p&gt;与&amp;amp;&amp;amp;、或||、非!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLineEdit" name="leExpression">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>331</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lExpression">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>规则表达式</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="lwExpression">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>110</y>
+      <width>161</width>
+      <height>311</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbApplyExpression">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>30</y>
+      <width>61</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>应用</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="tbAddExpression">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>90</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>+</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="tbDeleteExpression">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>90</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lAction">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>50</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>动作</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="leAction">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>50</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>510</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="mBluetooth">
+    <property name="title">
+     <string>蓝牙</string>
+    </property>
+    <addaction name="actionBluetoothConnect"/>
+    <addaction name="actionBluetoothDisconnect"/>
+    <addaction name="actionactionBluetoothStatus"/>
+    <addaction name="actionOpenBthPortMonitor"/>
+   </widget>
+   <widget class="QMenu" name="mSensor">
+    <property name="title">
+     <string>传感器</string>
+    </property>
+    <addaction name="actionOpenSensorMonitor"/>
+   </widget>
+   <addaction name="mBluetooth"/>
+   <addaction name="mSensor"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionBluetoothConnect">
+   <property name="icon">
+    <iconset resource="gloves.qrc">
+     <normaloff>:/images/connect.png</normaloff>:/images/connect.png</iconset>
+   </property>
+   <property name="text">
+    <string>连接</string>
+   </property>
+  </action>
+  <action name="actionBluetoothDisconnect">
+   <property name="icon">
+    <iconset resource="gloves.qrc">
+     <normaloff>:/images/disconnect.png</normaloff>:/images/disconnect.png</iconset>
+   </property>
+   <property name="text">
+    <string>断开</string>
+   </property>
+  </action>
+  <action name="actionactionBluetoothStatus">
+   <property name="icon">
+    <iconset resource="gloves.qrc">
+     <normaloff>:/images/status.png</normaloff>:/images/status.png</iconset>
+   </property>
+   <property name="text">
+    <string>状态</string>
+   </property>
+  </action>
+  <action name="actionOpenSensorMonitor">
+   <property name="icon">
+    <iconset resource="gloves.qrc">
+     <normaloff>:/images/monitor.png</normaloff>:/images/monitor.png</iconset>
+   </property>
+   <property name="text">
+    <string>状态监视窗</string>
+   </property>
+  </action>
+  <action name="actionOpenBthPortMonitor">
+   <property name="icon">
+    <iconset resource="gloves.qrc">
+     <normaloff>:/images/debug.png</normaloff>:/images/debug.png</iconset>
+   </property>
+   <property name="text">
+    <string>调试窗口</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="gloves.qrc"/>
+ </resources>
+ <connections/>
+</ui>
