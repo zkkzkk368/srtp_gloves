@@ -149,7 +149,16 @@
     <property name="title">
      <string>蓝牙</string>
     </property>
-    <addaction name="actionBluetoothConnect"/>
+    <widget class="QMenu" name="mBluetoothConnect">
+     <property name="title">
+      <string>连接</string>
+     </property>
+     <property name="icon">
+      <iconset resource="gloves.qrc">
+       <normaloff>:/images/connect.png</normaloff>:/images/connect.png</iconset>
+     </property>
+    </widget>
+    <addaction name="mBluetoothConnect"/>
     <addaction name="actionBluetoothDisconnect"/>
     <addaction name="actionactionBluetoothStatus"/>
     <addaction name="actionOpenBthPortMonitor"/>
@@ -164,16 +173,10 @@
    <addaction name="mSensor"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionBluetoothConnect">
-   <property name="icon">
-    <iconset resource="gloves.qrc">
-     <normaloff>:/images/connect.png</normaloff>:/images/connect.png</iconset>
-   </property>
-   <property name="text">
-    <string>连接</string>
-   </property>
-  </action>
   <action name="actionBluetoothDisconnect">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="gloves.qrc">
      <normaloff>:/images/disconnect.png</normaloff>:/images/disconnect.png</iconset>
@@ -183,6 +186,9 @@
    </property>
   </action>
   <action name="actionactionBluetoothStatus">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="gloves.qrc">
      <normaloff>:/images/status.png</normaloff>:/images/status.png</iconset>

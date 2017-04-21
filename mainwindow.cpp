@@ -21,26 +21,32 @@ MainWindow::MainWindow(QWidget *parent) :
         // 读取一行规则
         QByteArray line = file.readLine();
         QString strLine(line);
-        qDebug() << "<line> " << strLine << endl;
+//        qDebug() << "<line> " << strLine << endl;
         // 分割字段提取出规则名称、表达式、动作类型
         QStringList strLineSpl = strLine.split(":");
-        if(strLineSpl.size() != 3){
-            qDebug() << "Something wroing happend in data format" << endl;
-        }
+//        if(strLineSpl.size() != 3){
+//            qDebug() << "Something wroing happend in data format" << endl;
+//        }
         ruleItems << new RuleItem(strLineSpl[0], strLineSpl[1], strLineSpl[2]);
     }
-    // <调试>打印各项规则的分割结果
-    qDebug() << "<ruleItems>";
-    for(int i = 0; i < ruleItems.size(); ++i){
-        qDebug() << ruleItems[i]->getName()   << " "
-                 << ruleItems[i]->getExp()    << " "
-                 << ruleItems[i]->getAction() << " ";
-    }
-    qDebug() << "</ruleItems>";
+//    // <调试>打印各项规则的分割结果
+//    qDebug() << "<ruleItems>";
+//    for(int i = 0; i < ruleItems.size(); ++i){
+//        qDebug() << ruleItems[i]->getName()   << " "
+//                 << ruleItems[i]->getExp()    << " "
+//                 << ruleItems[i]->getAction() << " ";
+//    }
+//    qDebug() << "</ruleItems>";
     // 将各项规则添加到列表控件中
     for(int i =0; i < ruleItems.size(); ++i){
         ui->lwExpression->addItem( ruleItems[i]->getName() );
     }
+    // 检查可用的蓝牙端口号，为蓝牙 - 连接添加子Action
+    QActionGroup *actionGroupBthConnect = new QActionGroup(ui->mBluetoothConnect);
+    foreach(const QSerialPortInfo &info,  QSerialPortInfo::availablePorts())
+        actionGroupBthConnect->addAction(info.portName());
+    connect(actionGroupBthConnect, &QActionGroup::triggered, this, &MainWindow::on_subactionsBluetoothConnect_triggered);
+    ui->mBluetoothConnect->addActions(actionGroupBthConnect->actions());
 }
 
 MainWindow::~MainWindow()
@@ -107,9 +113,43 @@ void MainWindow::on_actionOpenBthPortMonitor_triggered()
     serialPortMonitor.show();
 }
 
-// 点击蓝牙 - 连接
-// 连接蓝牙
-void MainWindow::on_actionBluetoothConnect_triggered()
+// 蓝牙 - 连接 - <串口号>
+// 打开串口号对应的蓝牙设备
+void MainWindow::on_subactionsBluetoothConnect_triggered(QAction *act)
 {
+    foreach(  const QSerialPortInfo &info, QSerialPortInfo::availablePorts() ){
+        if(info.portName() == act->text()){
+            serial.setPort(info);
+            break;
+        }
+    }
+    if( serial.open(QIODevice::ReadWrite) ){
+        // 修改相关菜单项的状态
+        ui->mBluetoothConnect->setEnabled(false);
+        ui->actionBluetoothDisconnect->setEnabled(true);
+        ui->actionactionBluetoothStatus->setEnabled(true);
+        ui->actionOpenBthPortMonitor->setEnabled(false);
+        // 设置串口通讯：波特率9600,8位数据，无校验，1位停止，无流控
+        serial.setBaudRate(QSerialPort::Baud9600);
+        serial.setDataBits(QSerialPort::Data8);
+        serial.setParity(QSerialPort::NoParity);
+        serial.setStopBits(QSerialPort::OneStop);
+        serial.setFlowControl(QSerialPort::NoFlowControl);
+        qDebug() << "open bluetooth on port " << serial.portName();
+    }
+}
 
+
+// 点击蓝牙 - 断开
+// 断开蓝牙设备
+void MainWindow::on_actionBluetoothDisconnect_triggered()
+{
+    // 改变相关菜单项的状态
+    ui->mBluetoothConnect->setEnabled(true);
+    ui->actionBluetoothDisconnect->setEnabled(false);
+    ui->actionactionBluetoothStatus->setEnabled(false);
+    ui->actionOpenBthPortMonitor->setEnabled(true);
+    // 关闭串口
+    serial.close();
+    qDebug() << "close bluetooth on port " << serial.portName();
 }

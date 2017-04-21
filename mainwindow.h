@@ -10,6 +10,8 @@
 #include <QTextCodec>
 #include <QDebug>
 #include "ruleitem.h"
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 
 namespace Ui {
 class MainWindow;
@@ -39,7 +41,9 @@ private slots:
 
     void on_actionOpenBthPortMonitor_triggered();
 
-    void on_actionBluetoothConnect_triggered();
+    void on_subactionsBluetoothConnect_triggered(QAction *act);
+
+    void on_actionBluetoothDisconnect_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -48,6 +52,7 @@ private:
     QList<RuleItem *> ruleItems;    // 规则对象列表
     QFile file;                     // 规则记录文件
     int seletedItemIndex;           // 列表中当前选中项对应的规则对象的索引号
+    QSerialPort serial;
 };
 
 #endif // MAINWINDOW_H
