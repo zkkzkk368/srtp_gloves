@@ -12,6 +12,8 @@
 #include "ruleitem.h"
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+#include <QMessageBox>
+#include <blthandler.h>
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +46,10 @@ private slots:
     void on_subactionsBluetoothConnect_triggered(QAction *act);
 
     void on_actionBluetoothDisconnect_triggered();
+
+    void on_actionactionBluetoothStatus_triggered();
+
+    void bluetoothHandler();
 
 private:
     Ui::MainWindow *ui;

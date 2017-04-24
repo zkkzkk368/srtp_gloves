@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+#include "blthandler.h"
 
 namespace Ui {
 class SerialPortMonitor;

@@ -68,9 +68,36 @@ void SerialPortMonitor::on_pbBthClose_clicked()
 // 从缓冲区中读取数据，如果有数据则打印出来
 void SerialPortMonitor::ReadData(){
     QByteArray buf;
+    int x, y;
     buf = serial.readAll();
-    if(!buf.isEmpty())
+    if(!buf.isEmpty()){
         ui->tbRecvSend->append(tr(buf));
+
+        // test！
+        if(buf == "t1")
+            BltHandler::click();
+        else if(buf == "t2")
+            BltHandler::doubleClick();
+        else if (buf == "t3")
+            BltHandler::closeWindow();
+        else if (buf == "t4")
+            BltHandler::gotoDesktop();
+        else if (buf == "t5"){
+            BltHandler::getCursorPos(x, y);
+            BltHandler::moveTo(x+100, y+100);
+        }else if (buf == "t6")
+            BltHandler::pressDownKey();
+        else if (buf == "t7")
+            BltHandler::pressLeftKey();
+        else if (buf == "t8")
+            BltHandler::pressRightKey();
+        else if (buf == "t9")
+            BltHandler::pressUpKey();
+        else if (buf == "ta")
+            BltHandler::pressPageDownKey();
+        else if (buf == "tb")
+            BltHandler::pressPageUpKey();
+    }
     buf.clear();
 }
 

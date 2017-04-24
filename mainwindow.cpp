@@ -135,8 +135,11 @@ void MainWindow::on_subactionsBluetoothConnect_triggered(QAction *act)
         serial.setParity(QSerialPort::NoParity);
         serial.setStopBits(QSerialPort::OneStop);
         serial.setFlowControl(QSerialPort::NoFlowControl);
-        qDebug() << "open bluetooth on port " << serial.portName();
-    }
+        // 将信号与处理函数连接起来
+        QObject::connect(&serial, &QSerialPort::readyRead, this, &MainWindow::bluetoothHandler);
+        qDebug() << "[success] open bluetooth on port " << serial.portName();
+    }else
+        qDebug() << "[fail] open bluetooth on port " << serial.portName();
 }
 
 
@@ -151,5 +154,27 @@ void MainWindow::on_actionBluetoothDisconnect_triggered()
     ui->actionOpenBthPortMonitor->setEnabled(true);
     // 关闭串口
     serial.close();
-    qDebug() << "close bluetooth on port " << serial.portName();
+    qDebug() << "[success] close bluetooth on port " << serial.portName();
+}
+
+
+
+// 点击蓝牙 - 状态
+// 显示当前蓝牙信息
+void MainWindow::on_actionactionBluetoothStatus_triggered()
+{
+//    QMessageBox::about(this, tr("蓝牙状态"), tr(""));
+}
+
+void MainWindow::bluetoothHandler(){
+//    QByteArray buf;
+//    QString    strBuf = "";
+//    buf = serial.readAll();
+//    if(!buf.isEmpty()){
+//        strBuf += tr(buf);
+//        if(strBuf == "1"){
+//            BltHandler::gotoDesktop();
+//        }
+//    }
+//    buf.clear();
 }

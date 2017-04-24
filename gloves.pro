@@ -6,6 +6,9 @@
 
 QT       += core gui serialport
 
+# user32.lib包含keybd_event等接口
+LIBS     += user32.lib
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gloves
@@ -27,12 +30,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     sensormonitor.cpp \
     ruleitem.cpp \
-    serialportmonitor.cpp
+    serialportmonitor.cpp \
+    blthandler.cpp
 
 HEADERS  += mainwindow.h \
     sensormonitor.h \
     ruleitem.h \
-    serialportmonitor.h
+    serialportmonitor.h \
+    blthandler.h
 
 FORMS    += mainwindow.ui \
     sensormonitor.ui \
