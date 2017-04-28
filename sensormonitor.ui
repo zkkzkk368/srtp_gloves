@@ -2,16 +2,24 @@
 <ui version="4.0">
  <class>SensorMonitor</class>
  <widget class="QWidget" name="SensorMonitor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>430</width>
+    <height>230</height>
+   </rect>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>311</width>
-    <height>290</height>
+    <width>430</width>
+    <height>230</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>311</width>
-    <height>290</height>
+    <width>430</width>
+    <height>230</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -108,110 +116,19 @@
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="gbGyroSensor">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>150</y>
-     <width>131</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>陀螺仪传感器</string>
-   </property>
-   <widget class="QLabel" name="lGyroX">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>31</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x轴</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lGyroZ">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>70</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>z轴</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="leGyroX">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>30</y>
-      <width>51</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="leGyroZ">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>70</y>
-      <width>51</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="leGyroY">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>50</y>
-      <width>51</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lGyroY">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>50</y>
-      <width>31</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>y轴</string>
-    </property>
-   </widget>
-  </widget>
   <widget class="QGroupBox" name="gbTouchSensor">
    <property name="geometry">
     <rect>
      <x>190</x>
      <y>30</y>
      <width>91</width>
-     <height>221</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="title">
     <string>金属片触碰</string>
    </property>
-   <widget class="QCheckBox" name="cbTouch1">
+   <widget class="QCheckBox" name="cbTouch0">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -224,10 +141,10 @@
      <string>1</string>
     </property>
     <property name="checkable">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QCheckBox" name="cbTouch2">
+   <widget class="QCheckBox" name="cbTouch1">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -240,10 +157,10 @@
      <string>2</string>
     </property>
     <property name="checkable">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QCheckBox" name="cbTouch3">
+   <widget class="QCheckBox" name="cbTouch2">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -256,10 +173,10 @@
      <string>3</string>
     </property>
     <property name="checkable">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QCheckBox" name="cbTouch4">
+   <widget class="QCheckBox" name="cbTouch3">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -272,23 +189,84 @@
      <string>4</string>
     </property>
     <property name="checkable">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QCheckBox" name="cbTouch5">
+  </widget>
+  <widget class="QGroupBox" name="gbFingerBend">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>30</y>
+     <width>91</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>手指弯曲</string>
+   </property>
+   <widget class="QCheckBox" name="cbBend0">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>160</y>
+      <y>40</y>
       <width>41</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>5</string>
+     <string>1</string>
     </property>
     <property name="checkable">
-     <bool>false</bool>
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbBend1">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>70</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbBend2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>3</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cbBend3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>130</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>4</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

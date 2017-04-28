@@ -166,15 +166,69 @@ void MainWindow::on_actionactionBluetoothStatus_triggered()
 //    QMessageBox::about(this, tr("蓝牙状态"), tr(""));
 }
 
+
+// 蓝牙数据处理
+// 与serial对象的QSerialPort::readyRead信号相连接
 void MainWindow::bluetoothHandler(){
-//    QByteArray buf;
-//    QString    strBuf = "";
-//    buf = serial.readAll();
-//    if(!buf.isEmpty()){
-//        strBuf += tr(buf);
-//        if(strBuf == "1"){
-//            BltHandler::gotoDesktop();
-//        }
-//    }
-//    buf.clear();
+    QByteArray buf;     // 原始数据缓冲区
+    static QString strBuf = "";     // 【静态】字符串解析的数据缓冲区
+    int sIndex = -1, eIndex = -1;   // 's'字符和'e'字符的索引
+
+    // 尝试取出缓冲区内的所有原始数据
+    buf = serial.readAll();
+    // 如果原始数据非空，则进行处理
+    if(!buf.isEmpty()){
+        // 字符串解析并追加到字符串缓冲区里
+        strBuf.append( tr(buf) );
+        // 尝试查找字符's'和字符'e'
+        sIndex = strBuf.indexOf('s');
+        eIndex = strBuf.indexOf('e');
+        // 如果同时查找到字符's'和字符'e'
+        if(sIndex != -1 && eIndex != -1){
+            // 如果字符's'的索引比字符'e'的索引小
+            if(sIndex < eIndex){
+                // 提取出s和e之间的内容（含s和e字符）
+                // 内容如："s/00000000/-3160/-1648/13660/e"
+                strBuf = strBuf.mid(sIndex, eIndex - sIndex + 1);
+                qDebug() << "new : " << strBuf;
+                // 处理数据
+                sensorsUpdate( strBuf );
+                // 清空字符串缓冲区
+                strBuf = "";
+            }else{  // 否则数据有误
+                qDebug() << "Error buf : sIndex > eIndex";
+            }
+        }
+    }
+    // 清空原始数据缓冲区
+    buf.clear();
+}
+
+
+// 蓝牙数据更新与处理
+// 在函数bltHandler中被调用
+void MainWindow::sensorsUpdate(QString &bltStr){
+    // 分割字符串
+    // 分割结果如："s", "00000000", "-3160", "-1648", "13660", "e"
+    QStringList qsList = bltStr.split("/");
+
+    // 处理第一个字段
+    for(int i = 0; i < 4; i++){
+        // 处理偶数序号的内容（手指弯曲状态）
+        if(qsList[1][i*2] == '1')
+            sensorMonitor.findChild<QCheckBox *>( tr("cbBend%1").arg(i) )->setChecked(true);
+        else
+            sensorMonitor.findChild<QCheckBox *>( tr("cbBend%1").arg(i) )->setChecked(false);
+
+        // 处理奇数序号的内容（金属片触碰状态）
+        if(qsList[1][i*2 + 1] == '1')
+            sensorMonitor.findChild<QCheckBox *>( tr("cbTouch%1").arg(i) )->setChecked(true);
+        else
+            sensorMonitor.findChild<QCheckBox *>( tr("cbTouch%1").arg(i) )->setChecked(false);
+    }
+
+    // 处理第二三四个字段，分别为x，y，z轴的加速度
+    sensorMonitor.findChild<QLineEdit *>( tr("leAccX") )->setText(qsList[2]);
+    sensorMonitor.findChild<QLineEdit *>( tr("leAccY") )->setText(qsList[3]);
+    sensorMonitor.findChild<QLineEdit *>( tr("leAccZ") )->setText(qsList[4]);
 }

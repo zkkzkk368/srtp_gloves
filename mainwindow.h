@@ -14,6 +14,8 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QMessageBox>
 #include <blthandler.h>
+#include <QCheckBox>
+#include <QLineEdit>
 
 namespace Ui {
 class MainWindow;
@@ -59,6 +61,7 @@ private:
     QFile file;                     // 规则记录文件
     int seletedItemIndex;           // 列表中当前选中项对应的规则对象的索引号
     QSerialPort serial;
+    void sensorsUpdate(QString &bltStr);
 };
 
 #endif // MAINWINDOW_H
