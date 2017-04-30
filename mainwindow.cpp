@@ -190,7 +190,7 @@ void MainWindow::bluetoothHandler(){
                 // 提取出s和e之间的内容（含s和e字符）
                 // 内容如："s/00000000/-3160/-1648/13660/e"
                 strBuf = strBuf.mid(sIndex, eIndex - sIndex + 1);
-                qDebug() << "new : " << strBuf;
+//                qDebug() << "new : " << strBuf;
                 // 处理数据
                 sensorsUpdate( strBuf );
                 // 清空字符串缓冲区
@@ -211,6 +211,9 @@ void MainWindow::sensorsUpdate(QString &bltStr){
     // 分割字符串
     // 分割结果如："s", "00000000", "-3160", "-1648", "13660", "e"
     QStringList qsList = bltStr.split("/");
+    int accX, accY, accZ;
+    static int lastAccX, lastAccY, lastAccZ;
+    static int mouseDown = 0, backToDesktop = 0;
 
     // 处理第一个字段
     for(int i = 0; i < 4; i++){
@@ -231,4 +234,57 @@ void MainWindow::sensorsUpdate(QString &bltStr){
     sensorMonitor.findChild<QLineEdit *>( tr("leAccX") )->setText(qsList[2]);
     sensorMonitor.findChild<QLineEdit *>( tr("leAccY") )->setText(qsList[3]);
     sensorMonitor.findChild<QLineEdit *>( tr("leAccZ") )->setText(qsList[4]);
+
+    // 获得x，y，z轴的加速度数值
+    accX = qsList[2].toInt();
+    accY = qsList[3].toInt();
+    accZ = qsList[4].toInt();
+
+    // 处理左右挥动和上下挥动
+    if(lastAccY < -10000){
+        if(accZ - lastAccZ > 3000 && lastAccZ < -8000 && lastAccZ > -11000){
+//            BltHandler::pressLeftKey();
+            qDebug() << accZ - lastAccZ << " : press LEFT";
+        }else if(accZ - lastAccZ < -3000 && lastAccZ < -8000 && lastAccZ > -11000){
+//            BltHandler::pressRightKey();
+            qDebug() << accZ - lastAccZ << " : press RIGHT";
+        }
+    }else if(lastAccZ > 5000){
+        if(accX - lastAccX < -5000 && lastAccX > -2000 && lastAccX < 2000){
+//            BltHandler::pressUpKey();
+            qDebug() << accX - lastAccX << " : press UP";
+        }else if(accX - lastAccX > 5000 && lastAccX > -2000 && lastAccX < 2000){
+//            BltHandler::pressDownKey();
+            qDebug() << accX - lastAccX << " : press DOWN";
+        }
+    }
+
+    // 处理拇指与食指接触（鼠标点击）
+    if(qsList[1][7] == '1'){
+        if(!mouseDown){
+//            BltHandler::mLeftDown();
+            qDebug() << "mouse left down";
+            mouseDown = 1;
+        }
+    }else{
+        if(mouseDown){
+//            BltHandler::mLeftUp();
+            qDebug() << "mouse left up";
+            mouseDown = 0;
+        }
+    }
+
+    // 处理五指合拢（回到桌面）
+    if(qsList[1][0] == '1' && qsList[1][2] == '1' && qsList[1][4] == '1' && qsList[1][6] == '1'){
+//        BltHandler::gotoDesktop();
+        qDebug() << "back to desktop";
+        backToDesktop = 1;
+    }else{
+        backToDesktop = 0;
+    }
+
+
+    lastAccX = accX;
+    lastAccY = accY;
+    lastAccZ = accZ;
 }

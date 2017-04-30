@@ -19,6 +19,8 @@ public:
     static void moveTo(DWORD x, DWORD y);
     static void click();
     static void doubleClick();
+    static void mLeftDown();
+    static void mLeftUp();
     static void getCursorPos(int &x, int &y);
 
 private:

@@ -17,6 +17,7 @@
 #include <QCheckBox>
 #include <QLineEdit>
 
+
 namespace Ui {
 class MainWindow;
 }
